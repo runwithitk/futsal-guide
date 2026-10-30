@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Futsal benjamin · Le guide du joueur</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Page publique pour les joueurs : aucun nom, aucune donnée envoyée. Le carnet reste dans le navigateur du joueur.
+   Les vidéos au statut « a » (à valider) ne s'affichent que hors de github.io, c'est-à-dire dans l'aperçu du coach. */
+:root{
+  --bg:#f3f6f5; --card:#ffffff; --ink:#15201c; --muted:#5b6a64; --line:#d7e0dc;
+  --court:#1f5fbf; --courtsoft:#e3ecf9; --mark:#e2741f; --marksoft:#fbeadb; --ok:#2f8a57;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1513; --card:#17201d; --ink:#e6eeea; --muted:#9aaba4; --line:#2a3631;
+  --court:#7fa8ec; --courtsoft:#1b2a40; --mark:#f0954d; --marksoft:#3a2616; --ok:#5fc08a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1513; --card:#17201d; --ink:#e6eeea; --muted:#9aaba4; --line:#2a3631;
+  --court:#7fa8ec; --courtsoft:#1b2a40; --mark:#f0954d; --marksoft:#3a2616; --ok:#5fc08a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+header.top{padding-block:18px 6px}
+h1{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1.05;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0;font-size:.95rem}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding-block:8px;border-bottom:1px solid var(--line)}
+nav.tabs button{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.02em;text-transform:uppercase;padding:9px 0;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap;min-width:0}
+nav.tabs button[aria-selected="true"]{background:var(--court);border-color:var(--court);color:var(--bg)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+section.panel{display:flex;flex-direction:column;gap:16px;padding-top:16px}
+h2{font-family:var(--display);font-weight:700;font-size:1.5rem;margin:8px 0 0;letter-spacing:.02em;text-wrap:balance}
+p{margin:0}
+.block{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.btitle{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.15}
+.btitle .n{color:var(--mark);margin-right:6px}
+.lab{font-size:.75rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.small{font-size:.9rem;color:var(--muted)}
+.say{background:var(--courtsoft);border-radius:8px;padding:10px 12px;font-weight:600}
+.warn{border-left:4px solid var(--mark);padding:8px 12px;background:var(--marksoft);border-radius:0 8px 8px 0;font-size:.95rem}
+.rule{border-left:4px solid var(--court);padding:10px 12px;background:var(--courtsoft);border-radius:0 8px 8px 0;font-weight:600}
+.rule b{color:var(--court)}
+ul,ol{margin:0;padding-left:1.2em}li+li{margin-top:4px}
+.five{counter-reset:f;list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.five li{counter-increment:f;display:block;position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 44px;font-weight:600}
+.five li::before{content:counter(f);position:absolute;left:14px;top:4px;font-family:var(--display);font-weight:700;font-size:1.6rem;color:var(--mark)}
+.vids{list-style:none;padding:0;margin:0}.vids li+li{margin-top:8px}
+.vids a{display:block;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);text-decoration:none;color:var(--ink)}
+.vids a b{display:block;font-size:1rem}.vids a span{display:block;font-size:.85rem;color:var(--muted);margin-top:2px}
+.vids a::after{content:" ▶";color:var(--court)}
+.avis{display:flex;gap:6px;margin-top:6px}
+.avis button{font:inherit;font-size:.85rem;font-weight:700;min-height:40px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.avis button[aria-pressed="true"]{background:var(--court);border-color:var(--court);color:var(--bg)}
+.vids .tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;color:var(--bg);background:var(--mark);padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.words{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:640px){.words{grid-template-columns:1fr 1fr}}
+.word{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.word b{font-family:var(--display);font-size:1.2rem}
+.word .en{color:var(--muted);font-size:.85rem;margin-left:6px}
+.word p{margin:2px 0 0}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 14px}
+summary{font-family:var(--display);font-weight:700;font-size:1.2rem;padding:12px 0;cursor:pointer}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+details>ul,details>ol,details>p{padding-bottom:12px}
+.src{display:inline-block;font-size:.72rem;font-weight:700;color:var(--court);background:var(--courtsoft);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.tablewrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:440px;font-size:.95rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+/* dessins */
+.diagram{width:100%;height:auto;display:block;border-radius:8px;background:var(--courtsoft)}
+.diagram .court{fill:none;stroke:var(--court);stroke-width:2}
+.diagram .att{fill:var(--court)} .diagram .def{fill:var(--mark)} .diagram .gk{fill:var(--ink)}
+.diagram .ball{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.diagram .dia{fill:none;stroke:var(--mark);stroke-width:1.5;stroke-dasharray:3 3}
+.diagram .arrow{fill:none;stroke:var(--ink);stroke-width:2.2}
+.diagram .zone{fill:var(--marksoft);stroke:none}
+.diagram .zb{fill:var(--court);opacity:.2;stroke:none}
+.diagram .zs{fill:var(--mark);opacity:.25;stroke:none}
+.diagram .lane{stroke:var(--court);stroke-width:1;stroke-dasharray:2 4;opacity:.6}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;font-weight:700}
+.key span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.key .kb::before{background:var(--court);opacity:.35}.key .ks::before{background:var(--mark);opacity:.45}
+.diagram text{font-family:var(--body);font-size:11px;fill:var(--ink);font-weight:600}
+.diagram .in{fill:var(--bg);font-size:11px;font-weight:700;pointer-events:none}
+.diagram text.lg{font-size:9px;fill:var(--muted)}
+.diagram .lost{fill:none;stroke:var(--mark);stroke-width:2.5}
+.diagram text.big{font-family:var(--display);font-size:20px;font-weight:700;fill:var(--mark)}
+.diagram g.tok{cursor:grab;touch-action:none}
+.diagram g.tok.held circle{stroke:var(--ink);stroke-width:2.5}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.slide .q{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.1;text-wrap:balance}
+.slide .r{font-weight:600}
+.slide .r b{color:var(--mark)}
+.reset{font:inherit;font-weight:700;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.tools button{font:inherit;font-weight:700;min-height:44px;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tools button[aria-pressed="true"]{background:var(--mark);border-color:var(--mark);color:var(--bg)}
+/* carnet */
+.week{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.week button{font:inherit;font-weight:700;min-height:44px;min-width:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.week button:disabled{opacity:.35}
+.week b{font-family:var(--display);font-size:1.25rem}
+.day{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.day.today{border-color:var(--court);border-width:2px}
+.day .d{font-family:var(--display);font-weight:700;font-size:1.15rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-weight:700;font-size:.95rem;min-height:44px;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.day input{font:inherit;font-size:1rem;width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--ink)}
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.score div{background:var(--courtsoft);border-radius:10px;padding:10px;text-align:center}
+.score b{display:block;font-family:var(--display);font-size:2.2rem;line-height:1;color:var(--court)}
+.score span{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.hist{display:flex;gap:6px;align-items:flex-end;height:70px;margin-top:18px}
+.hist div{flex:1;background:var(--court);border-radius:4px 4px 0 0;min-height:3px;position:relative}
+.hist div span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:.8rem;font-weight:700;color:var(--ink)}
+.histlab{display:flex;gap:6px}.histlab span{flex:1;text-align:center;font-size:.75rem;color:var(--muted)}
+a{color:var(--court)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>Futsal benjamin · Le guide du joueur</h1>
+  <p class="sub">Tout ce qu'on voit au gymnase, pour le revoir et le pratiquer à la maison. Saison 2026-2027.</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" aria-controls="accueil" aria-selected="true">Accueil</button>
+  <button role="tab" aria-controls="carnet" aria-selected="false">Carnet</button>
+  <button role="tab" aria-controls="routine" aria-selected="false">Routine</button>
+  <button role="tab" aria-controls="jeu" aria-selected="false">Le jeu</button>
+  <button role="tab" aria-controls="arretes" aria-selected="false">Arrêtés</button>
+  <button role="tab" aria-controls="tableau" aria-selected="false">Tableau</button>
+  <button role="tab" aria-controls="regles" aria-selected="false">Règles</button>
+  <button role="tab" aria-controls="mots" aria-selected="false">Mots</button>
+  <button role="tab" aria-controls="seances" aria-selected="false">Séances</button>
+  <button role="tab" aria-controls="videos" aria-selected="false">Vidéos</button>
+</nav>
+
+<!-- ================= ACCUEIL ================= -->
+<section class="panel" id="accueil" role="tabpanel">
+<div class="block">
+  <p class="btitle">Ta semaine, en quatre choses</p>
+  <ol>
+    <li><b>Ta routine</b>, 10 minutes, avec un ballon. Tous les jours si tu peux.</li>
+    <li><b>Des touches de ballon</b> en plus : semelle, jongles, conduite.</li>
+    <li><b>Un peu d'étude</b> : une vidéo, un dessin du Tableau, ton placement et ton poste.</li>
+    <li><b>Tout le reste</b> : ton club, la ville, un match. Dis-le-moi le vendredi.</li>
+  </ol>
+  <p class="say">Le vendredi, je te demande combien de jours tu as fait ta routine. Ton chiffre est dans ton <b>Carnet</b>.</p>
+</div>
+<h2>Nos valeurs</h2>
+<div class="block">
+  <p><b>L'équipe est une famille.</b> Des amis, un groupe. On se respecte et on se soutient, dans les bons moments comme dans les moins bons.</p>
+  <ol class="five">
+    <li><b>Le respect</b> : des coéquipiers, des adversaires, des arbitres, des parents, et de toi-même.</li>
+    <li><b>La constance</b> : un peu chaque jour vaut mieux que beaucoup une fois.</li>
+    <li><b>Le travail</b> : on s'entraîne, on étudie, on en fait plus. Le talent ne suffit pas.</li>
+    <li><b>L'honnêteté</b> : savoir dire quand c'est trop, et quand ce n'est pas assez. Dire que c'est dur, parce que ça l'est.</li>
+    <li><b>La progression</b> : on mesure où tu en es aujourd'hui, pas ce que tu vaux. Le but, c'est d'être meilleur que toi hier.</li>
+  </ol>
+</div>
+<div class="block">
+  <p class="btitle">Gagner, perdre, se relever</p>
+  <p>On joue toujours pour gagner. Et en même temps, <b>l'erreur est permise</b> : tu ne seras pas puni pour avoir essayé. Ce qui compte, c'est de traverser les moments durs et de s'en relever.</p>
+  <p>Les joueurs qui restent concentrés, peu importe ce qui arrive, sont ceux qui font la différence sur le terrain. Et au futsal comme au soccer, <b>personne ne gagne un match seul</b> : c'est toute l'équipe, chacun avec le même effort et la même envie de progresser.</p>
+</div>
+<div class="block">
+  <p class="btitle">Notre parcours, jusqu'en secondaire 5</p>
+  <p>Cette saison, c'est le début d'un chemin qui va jusqu'en secondaire 5. Chaque année, on grandit, on s'améliore. Un jour, on choisira une année où <b>le championnat</b> sera notre mission.</p>
+  <p>Pour y arriver, il faut d'abord <b>des bases solides</b>. Comme une maison : on construit les fondations avant les murs. C'est ce qu'on fait cette année, pour que tout ce qui vient après tienne debout et t'aide à grandir.</p>
+</div>
+<h2>Les cinq mots de l'équipe</h2>
+<ol class="five">
+  <li><b>Semelle</b> : le dessous du pied. On arrête et on tire le ballon avec.</li>
+  <li><b>Tête levée</b> : tu regardes le jeu, pas tes souliers.</li>
+  <li><b>Entre le ballon et le but</b> : ton corps entre leur ballon et notre but.</li>
+  <li><b>Attendre</b> : il a le ballon collé au pied, tu freines de côté, tu ne plonges pas.</li>
+  <li><b>Décaler</b> : le ballon change de côté, toute l'équipe glisse avec lui.</li>
+</ol>
+<div class="block">
+  <p class="btitle">Conseils</p>
+  <ul>
+    <li>Le ballon de futsal rebondit peu. Il se contrôle à la <b>semelle</b> : c'est pour ça qu'on la travaille tous les jours.</li>
+    <li>Chez nous, tout le monde joue partout, <b>gardien compris</b>. Apprends les cinq postes, pas juste le tien.</li>
+    <li>Une attaque qui <b>garde le ballon</b> est une attaque réussie. Pas besoin de tirer à chaque fois.</li>
+    <li>Pas d'étirements à ton âge : la FIFA dit d'attendre que tes muscles soient prêts. Après l'effort, on marche et on bouge doucement.</li>
+    <li>Ton pied faible se travaille en jouant : dans la routine, une touche sur deux avec lui.</li>
+  </ul>
+</div>
+<p class="small">Ce guide ne contient aucun nom et n'envoie rien nulle part. Ton carnet reste sur ton téléphone ou ton ordi.</p>
+</section>
+
+<!-- ================= CARNET ================= -->
+<section class="panel" id="carnet" role="tabpanel" hidden>
+<h2>Mon carnet</h2>
+<div class="block">
+  <p class="btitle">Le travail en plus</p>
+  <p>Comme tout dans la vie, pour devenir meilleur, il faut pratiquer, s'entraîner, étudier, et mettre du temps en plus. Tous les joueurs professionnels ont fait du travail en plus pour arriver où ils sont.</p>
+  <p>Tu n'as pas besoin de vouloir devenir professionnel. Si tu es ici pour t'amuser, c'est correct. Mais chez nous, <b>progresser</b> est une de nos valeurs : on veut que chacun soit meilleur à la fin de la saison qu'au début.</p>
+  <p class="say">Notre objectif d'équipe : <b>18 minutes par jour</b>. Ta routine (10 min), des touches (5 min), un peu d'étude (3 min). Fais-le tous les jours, et tu sortiras du lot.</p>
+</div>
+<div class="block">
+  <p class="btitle">Combien de temps pour une habitude ?</p>
+  <p>Une chercheuse de l'University College de Londres, Phillippa Lally, a suivi des volontaires qui commençaient une nouvelle habitude. En moyenne, il a fallu <b>66 jours</b> pour qu'elle devienne automatique, mais ça variait de <b>18 à 254 jours</b> selon la personne. Une autre étude (2023) a trouvé qu'il faut environ <b>six mois</b> pour que l'exercice devienne une habitude.</p>
+  <p><b>Ce que ça veut dire pour toi :</b> si tu commences ta routine aujourd'hui, elle deviendra un réflexe autour du début janvier. Les premières semaines demandent un effort. Ensuite, ça vient tout seul.</p>
+  <p class="small">À lire : <a target="_blank" rel="noopener" href="https://www.rtbf.be/article/combien-de-jours-faut-il-pour-adopter-une-nouvelle-habitude-11313778">« Combien de jours faut-il pour adopter une nouvelle habitude ? »</a>, RTBF, 18 janvier 2024.</p>
+</div>
+<div class="rule">Cette semaine : <b>ta routine</b>, <b>tes touches</b>, <b>un peu de vidéo</b> sur ton placement et ton poste, et <b>tout ce que tu fais d'autre</b>. Dis-le-moi le vendredi.</div>
+<p class="small">Touche ce que tu as fait chaque jour. Ton carnet reste <b>dans ce navigateur</b> : personne d'autre ne le voit, rien n'est envoyé. Il est encore là quand tu fermes la page et que tu reviens, <b>sur le même téléphone et le même navigateur</b>.</p>
+<p class="warn"><b>Sur iPhone :</b> ajoute la page à ton écran d'accueil (bouton Partager, puis « Sur l'écran d'accueil »). Sinon, Safari peut effacer ton carnet si tu ne l'ouvres pas pendant une semaine.</p>
+<p class="warn" id="nostore" hidden>Ce navigateur ne garde pas le carnet (navigation privée ?). Ouvre la page dans une fenêtre normale.</p>
+<div class="score">
+  <div><b id="s-routine">0</b><span>jours de routine</span></div>
+  <div><b id="s-minutes">0</b><span>minutes cette semaine</span></div>
+  <div><b id="s-etude">0</b><span>jours d'étude</span></div>
+</div>
+<p class="say" id="vendredi"></p>
+<div class="week"><button type="button" id="wprev" aria-label="Semaine précédente">◀</button><b id="wlabel"></b><button type="button" id="wnext" aria-label="Semaine suivante">▶</button></div>
+<div id="days" style="display:flex;flex-direction:column;gap:8px"></div>
+<div class="block">
+  <p class="lab">Ce que veut dire chaque case</p>
+  <ul>
+    <li><b>Routine</b> : les sept exercices de l'onglet Routine, 10 minutes, ballon et corps.</li>
+    <li><b>Touches</b> : du ballon en plus, seul : jongles, semelle, conduite.</li>
+    <li><b>Étude</b> : une vidéo, un dessin du Tableau, une séance relue.</li>
+    <li><b>Autre</b> : un entraînement ailleurs, en club, avec la ville, un match. Écris ce que tu as fait.</li>
+  </ul>
+</div>
+<div class="block">
+  <p class="lab">Ta routine, les quatre dernières semaines</p>
+  <div class="hist" id="hist"></div>
+  <div class="histlab" id="histlab"></div>
+</div>
+</section>
+
+<!-- ================= ROUTINE ================= -->
+<section class="panel" id="routine" role="tabpanel" hidden>
+<h2>Ta routine à la maison</h2>
+<div class="block">
+  <p class="btitle">Ce que c'est</p>
+  <p>Ton entraînement de tous les jours : <b>10 minutes</b>, un ballon, un petit espace. <b>8 minutes avec le ballon</b>, puis <b>2 minutes pour ton corps</b>. Regarde la vidéo de chaque exercice une fois, puis fais-le. Une touche sur deux avec ton pied faible.</p>
+  <p class="small"><b>Pourquoi surtout le ballon :</b> le manuel de la CONMEBOL (la fédération d'Amérique du Sud) dit qu'avant la fin de la puberté, on s'entraîne avec le ballon presque tout le temps, avec de la coordination et de la variété, et que la force se travaille avec <b>le poids du corps</b>, sans poids ni machines. Le manuel de la FIFA ajoute : pas d'étirements à ton âge.</p>
+</div>
+
+<div class="block"><p class="btitle"><span class="n">1</span>Touches du dessus · 1 min</p>
+<p>Le ballon devant toi. Touche le dessus avec la semelle, pied gauche, pied droit, de plus en plus vite. Tête levée dès que tu peux.</p>
+<ul class="vids" data-sec="r1"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">2</span>Rouler à la semelle · 2 min</p>
+<p>Fais rouler le ballon sous ta semelle, de côté, d'un pied à l'autre. Puis en arrière. Le ballon reste collé.</p>
+<ul class="vids" data-sec="r2"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">3</span>Tirer-tourner · 2 min</p>
+<p>Semelle sur le ballon, tire-le en arrière, fais demi-tour, repars. Tête levée en repartant.</p>
+<ul class="vids" data-sec="r3"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">4</span>Intérieur-intérieur · 1 min</p>
+<p>Le ballon passe d'un pied à l'autre, avec l'intérieur des pieds, petits coups rapides. Sur place, puis en avançant doucement.</p>
+<p class="small"><b>Si tu as un mur et la permission de tes parents</b> : passes contre le mur, une touche, intérieur du pied, à 3 ou 4 mètres. Demande avant.</p>
+<ul class="vids" data-sec="r4"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">5</span>Arrêter à la semelle · 1 min</p>
+<p>Pousse le ballon devant toi, rattrape-le, arrête-le net à la semelle, lève la tête, repars de l'autre côté.</p>
+<ul class="vids" data-sec="r5"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">6</span>Demi-tour et accélération · 1 min, si tu as l'espace</p>
+<p>Seulement si tu as assez de place, dehors ou dans une grande pièce vide. Conduis le ballon, demi-tour à la semelle, deux pas très vite. Pas d'espace : refais l'exercice 3.</p>
+<ul class="vids" data-sec="r6"></ul></div>
+
+<div class="block"><p class="btitle"><span class="n">7</span>Ton corps · 2 min</p>
+<p>Avec le poids de ton corps seulement, lentement et bien fait : <b>10 squats</b>, <b>10 fentes</b> (5 par jambe), <b>20 secondes de planche</b> (gainage), <b>5 à 10 pompes</b>. Si c'est trop facile, fais-en un peu plus, mais toujours bien fait. Pas de poids, pas d'étirements.</p>
+<ul class="vids" data-sec="r7"></ul></div>
+
+<div class="block"><p class="btitle">Tout suivre d'un coup</p>
+<p>Une séance complète à suivre en direct, quand tu veux plus que 10 minutes.</p>
+<ul class="vids" data-sec="suivre"></ul></div>
+
+<p class="small">Après : marche une minute et bouge doucement. Pas d'étirements.</p>
+
+<h2>Pour les gardiens</h2>
+<p class="small">En plus de ta routine, 5 minutes. Tout le monde peut les faire : chez nous, tout le monde passe au but.</p>
+<div class="block"><p class="btitle"><span class="n">1</span>Position d'attente</p>
+<p>Pieds posés, largeur des épaules, genoux pliés, mains devant, sur l'avant des pieds. Tiens-la 10 secondes, relâche, recommence. 10 fois.</p>
+<ul class="vids" data-sec="g1"></ul></div>
+<div class="block"><p class="btitle"><span class="n">2</span>Attraper</p>
+<p>Lance le ballon en l'air, attrape-le au plus haut, les deux mains derrière le ballon, et ramène-le contre toi. 20 fois.</p>
+<ul class="vids" data-sec="g2"></ul></div>
+<div class="block"><p class="btitle"><span class="n">3</span>Relancer à la main</p>
+<p>Le gardien est notre premier attaquant. Fais rouler le ballon à la main vers un objet à 5 mètres, vite et précis. Tu as 4 secondes en match.</p>
+<ul class="vids" data-sec="g3"></ul></div>
+</section>
+
+<!-- ================= LE JEU ================= -->
+<section class="panel" id="jeu" role="tabpanel" hidden>
+<h2>Les cinq postes</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>Poste</th><th>En anglais</th><th>Son travail</th></tr></thead>
+  <tbody>
+    <tr><td><b>Gardien</b></td><td>Goalkeeper</td><td>Il arrête les tirs. Et il est le premier attaquant : il relance vite, à la main, en 4 secondes.</td></tr>
+    <tr><td><b>Défenseur</b></td><td>Defender, fixo</td><td>Le joueur le plus près de notre but. Il surveille leur pivot.</td></tr>
+    <tr><td><b>Ailier</b> (deux)</td><td>Winger</td><td>Un de chaque côté, large. Il ouvre le terrain.</td></tr>
+    <tr><td><b>Pivot</b></td><td>Pivot</td><td>Le plus près de leur but, dos au but. Il garde le ballon et le redonne.</td></tr>
+  </tbody>
+</table></div>
+<div data-slide="1"></div>
+
+<h2>Qui couvre quoi</h2>
+<p class="small">Le terrain est coupé en trois couloirs dans sa longueur : un de chaque côté, un au centre. Chaque poste a sa zone quand on a le ballon, et une autre quand on ne l'a pas. Ce sont des repères, pas des cages : on bouge, et un coéquipier prend la place laissée libre.</p>
+<div class="key"><span class="kb">Zone quand on a le ballon</span><span class="ks">Zone quand on ne l'a pas</span></div>
+<div class="tablewrap"><table>
+  <thead><tr><th>Poste</th><th>On a le ballon</th><th>On ne l'a pas</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pivot</b></td><td>Couloir du centre, tout en haut : dans la zone du gardien adverse, aux poteaux. Il dérange, il attire les défenseurs vers leur but pour ouvrir le milieu, puis il remonte chercher le ballon et le remet aux ailiers.</td><td>Le premier défenseur. Il freine leur porteur, de côté, et revient au centre, devant notre défenseur.</td></tr>
+    <tr><td><b>Ailier</b></td><td>Son couloir de côté, sur toute la longueur. Large, pour ouvrir le terrain, à une autre hauteur que l'autre ailier.</td><td>Il rentre vers le centre, dans notre moitié, entre le ballon et notre but.</td></tr>
+    <tr><td><b>Défenseur</b></td><td>Couloir du centre, en bas, derrière le ballon. C'est souvent lui qui <b>reste derrière</b> quand on attaque.</td><td>Couloir du centre, devant notre gardien. Il surveille leur pivot.</td></tr>
+    <tr><td><b>Gardien</b></td><td>Sa surface. Il relance vite, à la main, en 4 secondes : c'est notre premier attaquant.</td><td>Sa surface et son but. Il parle à ses défenseurs : il voit tout le terrain.</td></tr>
+  </tbody>
+</table></div>
+<div data-slide="17"></div>
+<div data-slide="18"></div>
+<div data-slide="19"></div>
+<div data-slide="20"></div>
+<div class="rule"><b>Le travail du pivot :</b> il va toujours vers la zone du gardien adverse, jusqu'aux poteaux. Son travail, c'est de déranger : créer de l'espace, faire reculer les défenseurs pour ouvrir le milieu. Puis il remonte, reçoit le ballon et le remet aux ailiers.</div>
+<div data-slide="21"></div>
+
+<h2>On a le ballon</h2>
+<div class="block"><p class="btitle">Le losange</p>
+<p>Les quatre joueurs font un losange : un en bas, deux sur les côtés, un en haut. Comme ça, celui qui a le ballon a toujours <b>trois passes possibles</b>. Si on est tous sur la même ligne, il n'en a plus.</p>
+<p>Le losange, c'est <b>une forme, pas une place</b>. Si un joueur bouge, un autre prend sa place.</p></div>
+<div data-slide="3"></div>
+
+<div class="block"><p class="btitle">La contre-attaque</p>
+<p>On vient de prendre le ballon. Devant, c'est <b>ouvert</b> (plus de nous que d'eux) ? On y va, vite, vers l'avant. C'est <b>fermé</b> (ils sont revenus) ? On garde le ballon et on refait le losange.</p></div>
+<div class="rule"><b>Règle de la saison :</b> quand on attaque, <b>un joueur reste toujours derrière</b>. Jamais les quatre en avant. Si on perd le ballon, il est déjà là.</div>
+<div data-slide="14"></div>
+
+<h2>On perd le ballon</h2>
+<div class="rule"><b>Premier réflexe :</b> on recule tout de suite, <b>derrière le ballon</b>. Un repli rapide. Ça ralentit leur attaque.</div>
+<div class="block"><p class="btitle">Le chemin le plus court</p>
+<p>Tu reviens derrière le ballon <b>en ligne droite</b>, par le chemin le plus rapide. Ne cours pas en diagonale pour retrouver ta place du début : tu perds du temps.</p>
+<p>Tu pars <b>d'où tu es</b>. Tu bouches le trou le plus proche de toi. Tes coéquipiers s'ajustent autour de toi pour couvrir l'espace et les joueurs. Pas le temps de réfléchir : c'est un réflexe, tout de suite.</p></div>
+<div data-slide="15"></div>
+<div class="block"><p class="btitle">Freiner, pas plonger</p>
+<p>Le premier qui arrive sur le porteur le <b>freine</b>, de côté. Il ne plonge pas : celui qui plonge est battu. Les autres se placent <b>entre le ballon et notre but</b>. Pas de pressing haut cette année : on défend ensemble, dans notre moitié.</p></div>
+<div data-slide="6"></div>
+<div class="rule"><b>Tu ne t'arrêtes jamais de courir.</b> Même s'il part seul vers notre but. Le gardien peut arrêter le tir. Le tireur peut rater. Il peut y avoir un rebond, et tu dois être là. Et un joueur qui sent quelqu'un arriver derrière lui se presse et rate plus souvent.</div>
+<div data-slide="16"></div>
+
+<h2>Le 1 contre 1, en défense</h2>
+<div class="block">
+<p>Il vient vers notre but avec le ballon. Tu te places <b>de côté</b>, à un bras de lui : le chemin du but est fermé, il ne lui reste que le côté. Tu <b>attends</b>. Tu <b>mets le pied</b> seulement quand le ballon s'éloigne de son pied. Regarde le ballon, pas ses feintes.</p></div>
+<div data-slide="9"></div>
+<h2>Pour voir</h2>
+<ul class="vids" data-sec="jeu"></ul>
+<h2>À étudier, en français</h2>
+<p class="small">Plus détaillées, sur le placement et les postes. Prends ton temps, mets sur pause, reviens au Tableau pour refaire la situation.</p>
+<ul class="vids" data-sec="etude"></ul>
+<p class="small">Tous les dessins, à manipuler toi-même, sont dans l'onglet <b>Tableau</b>.</p>
+</section>
+
+<!-- ================= ARRÊTÉS ================= -->
+<section class="panel" id="arretes" role="tabpanel" hidden>
+<h2>Les coups de pied arrêtés</h2>
+<div class="rule">Après un arrêt de jeu, on a <b>4 secondes</b> pour jouer, et les adversaires sont à <b>5 mètres</b>. Celui qui joue ne retouche pas le ballon avant un autre joueur.</div>
+<div class="block"><p class="btitle">Notre touche</p>
+<p>Au pied, ballon immobile sur la ligne. <b>Courte au défenseur</b> : c'est sûr. <b>Longue au pivot</b> : seulement si c'est ouvert. Pas de but direct sur une touche.</p>
+<ul class="vids" data-sec="touche"></ul></div>
+<div data-slide="10"></div>
+<div class="block"><p class="btitle">Leur corner</p>
+<p>Un joueur au <b>premier poteau</b>. Un joueur sur le tireur, à 5 mètres. Les autres font <b>la boîte</b> devant le gardien. Chacun surveille le joueur à côté de lui, pas seulement le ballon. S'ils jouent court sur le côté : <b>un seul sort</b>, les autres gardent la boîte.</p>
+<ul class="vids" data-sec="corner-def"></ul></div>
+<div data-slide="11"></div>
+<div class="block"><p class="btitle">Notre corner</p>
+<p>Ballon immobile dans l'arc de coin, au pied, 4 secondes. Ici, on peut marquer directement.</p>
+<ul class="vids" data-sec="corner-att"></ul></div>
+<div class="block"><p class="btitle">Le coup franc</p>
+<p>Ballon immobile, 4 secondes, adversaires à 5 mètres. À partir de leur 6e faute, on a un coup franc <b>sans mur</b>, du point des 10 mètres.</p>
+<ul class="vids" data-sec="coupfranc"></ul></div>
+<div class="block"><p class="btitle">La sortie de but</p>
+<p>Le gardien relance <b>à la main</b>, de sa surface, en 4 secondes. Il ne botte pas. Pas de but direct.</p></div>
+</section>
+
+<!-- ================= TABLEAU ================= -->
+<section class="panel" id="tableau" role="tabpanel" hidden>
+<h2>Le tableau</h2>
+<p class="small">Vu de haut, notre but à gauche. Nous en bleu (G gardien, D défenseur, A ailier, P pivot), eux en orange. <b>Glisse les joueurs et le ballon avec le doigt.</b> Trace une course ou une passe, efface, ou remets le dessin comme au départ.</p>
+<div class="tools" role="group" aria-label="Outil">
+  <button type="button" data-tool="move" aria-pressed="true">Déplacer</button>
+  <button type="button" data-tool="arrow" aria-pressed="false">Course</button>
+  <button type="button" data-tool="pass" aria-pressed="false">Passe</button>
+  <button type="button" data-tool="erase" aria-pressed="false">Effacer</button>
+</div>
+<div id="slidelist" style="display:flex;flex-direction:column;gap:14px"></div>
+</section>
+
+<!-- ================= RÈGLES ================= -->
+<section class="panel" id="regles" role="tabpanel" hidden>
+<h2>Les cinq à retenir</h2>
+<ol class="five">
+  <li>Pas de hors-jeu.</li>
+  <li>Touche au pied, ballon sur la ligne, 4 secondes.</li>
+  <li>Le gardien relance à la main, 4 secondes.</li>
+  <li>Changements par la zone : l'un sort, l'autre entre.</li>
+  <li>Les fautes se comptent : à la 6e, coup franc sans mur.</li>
+</ol>
+<details open><summary>Le match</summary>
+<ul>
+  <li>2 demies de 20 minutes. Le chrono s'arrête quand le ballon est arrêté. <span class="src">RSEQ art. 9</span></li>
+  <li>1 temps mort par équipe par demie, 1 minute, quand on a le ballon sur un arrêt de jeu. <span class="src">RSEQ art. 9</span></li>
+  <li>Ballon de futsal, grosseur 4. <span class="src">RSEQ art. 10</span></li>
+  <li>Pas de hors-jeu : tu peux être n'importe où sur le terrain. <span class="src">FIFA Loi 11</span></li>
+  <li>Changements illimités, à tout moment, même pendant le jeu, par la zone de ton équipe. Celui qui sort quitte le terrain avant que l'autre entre. <span class="src">FIFA Loi 3</span></li>
+</ul></details>
+<details><summary>Quand le ballon sort</summary>
+<ul>
+  <li>Le ballon est sorti seulement quand il a passé <b>entièrement</b> la ligne. <span class="src">FIFA</span></li>
+  <li>Ballon au plafond : touche pour l'autre équipe. <span class="src">FIFA</span></li>
+  <li>Touche : au pied, ballon immobile sur la ligne, adversaires à 5 m, 4 secondes, pas de but direct. Seul le tireur peut être hors du terrain. <span class="src">FIFA Loi 15</span></li>
+  <li>Sortie de but : le gardien à la main, de sa surface, 4 secondes, adversaires hors de la surface. <span class="src">FIFA Loi 16</span></li>
+  <li>Corner : dans l'arc de coin, au pied, 4 secondes, but direct possible. <span class="src">FIFA Loi 17</span></li>
+</ul></details>
+<details><summary>Le gardien</summary>
+<ul>
+  <li>Pas plus de 4 secondes avec le ballon dans sa moitié, avec les mains ou les pieds. <span class="src">FIFA Loi 12</span></li>
+  <li>Une passe d'un coéquipier avec le pied, même sur une touche : il ne la prend pas à la main. <span class="src">FIFA Loi 12</span></li>
+  <li>Après avoir joué le ballon, il ne le retouche pas dans sa moitié si un coéquipier le lui redonne avant qu'un adversaire l'ait touché. <span class="src">FIFA Loi 12</span></li>
+  <li>Les mains, seulement dans sa surface. <span class="src">FIFA Loi 12</span></li>
+</ul></details>
+<details><summary>Les fautes</summary>
+<ul>
+  <li>Main ou bras (sauf le gardien dans sa surface) : coup franc direct. <span class="src">FIFA Loi 12</span></li>
+  <li>Les fautes de l'équipe se comptent, à chaque demie. Dès la 6e, coup franc direct sans mur, du point des 10 mètres. <span class="src">FIFA Loi 13</span></li>
+  <li>Chez nous : on reste debout, pas de tacle glissé. <span class="src">règle d'équipe</span></li>
+</ul></details>
+<p class="small">FIFA = Lois du Jeu de Futsal 2025/26. RSEQ = règlements de la Montérégie.</p>
+</section>
+
+<!-- ================= MOTS ================= -->
+<section class="panel" id="mots" role="tabpanel" hidden>
+<h2>Les consignes du coach</h2>
+<div class="words">
+  <div class="word"><b>Fermer le trou</b><span class="en">close the gap</span><p>Pas de passe entre toi et ton coéquipier.</p></div>
+  <div class="word"><b>Garde ta place</b><span class="en">hold your position</span><p>Tu restes dans le losange, tu ne cours pas seul.</p></div>
+  <div class="word"><b>Passe et bouge</b><span class="en">pass and move</span><p>Tu donnes, tu changes de place tout de suite.</p></div>
+  <div class="word"><b>Mets le pied</b><span class="en">put your foot in</span><p>Seulement quand le ballon s'éloigne de son pied.</p></div>
+  <div class="word"><b>Replace-toi</b><span class="en">get back in shape</span><p>Ballon perdu : derrière le ballon d'abord, en ligne droite.</p></div>
+  <div class="word"><b>Un derrière</b><span class="en">one stays back</span><p>On attaque, mais un joueur reste toujours derrière.</p></div>
+  <div class="word"><b>Feinte, accélère</b><span class="en">feint, burst</span><p>Tu montres un côté, tu pars de l'autre, deux pas très vite.</p></div>
+</div>
+<h2>Les mots du terrain</h2>
+<div class="words">
+  <div class="word"><b>Conduite</b><span class="en">dribbling</span><p>Avancer avec le ballon collé au pied.</p></div>
+  <div class="word"><b>Contrôle orienté</b><span class="en">directional first touch</span><p>Ton premier contact envoie déjà le ballon où tu veux aller.</p></div>
+  <div class="word"><b>Appel</b><span class="en">run</span><p>Tu cours pour demander le ballon dans un espace vide.</p></div>
+  <div class="word"><b>Démarquage</b><span class="en">getting open</span><p>Tu te sors de ton adversaire pour qu'on te voie.</p></div>
+  <div class="word"><b>Surnombre</b><span class="en">overload</span><p>On est plus qu'eux : 3 contre 2.</p></div>
+  <div class="word"><b>Repli</b><span class="en">recovery run</span><p>On perd le ballon : tout le monde revient derrière lui.</p></div>
+  <div class="word"><b>Couverture</b><span class="en">cover</span><p>Tu es derrière ton coéquipier, prêt s'il se fait passer.</p></div>
+  <div class="word"><b>Remise</b><span class="en">lay-off</span><p>Tu redonnes en une touche à celui qui arrive.</p></div>
+  <div class="word"><b>Faute cumulée</b><span class="en">accumulated foul</span><p>Chaque faute compte. À la 6e, coup franc sans mur.</p></div>
+</div>
+</section>
+
+<!-- ================= SÉANCES ================= -->
+<section class="panel" id="seances" role="tabpanel" hidden>
+<h2>Pourquoi cet ordre</h2>
+<div class="block">
+  <p>La plupart d'entre vous viennent du soccer. Le futsal se joue avec les mêmes pieds, mais pas avec la même tête : un terrain plus petit, un ballon qui ne rebondit pas, cinq joueurs, et on attaque et on défend tous ensemble. Alors on construit la saison <b>en quatre étapes</b>, chacune posée sur la précédente.</p>
+  <p class="small">Le plan suit le manuel de la FIFA pour les jeunes, adapté à une pratique par semaine.</p>
+</div>
+<div class="tablewrap"><table>
+  <thead><tr><th>Étape</th><th>Quand</th><th>Le but</th></tr></thead>
+  <tbody>
+    <tr><td><b>1. Le groupe</b></td><td>fin sept. à mi-oct.</td><td>Devenir une équipe. Découvrir le jeu et tous les postes, gardien compris.</td></tr>
+    <tr><td><b>2. Les bases</b></td><td>mi-oct. au 31 oct.</td><td>La technique dans le jeu. Se placer en défense. Le repli.</td></tr>
+    <tr><td><b>3. La saison</b></td><td>31 oct. à décembre</td><td>Les matchs. L'attaque, la contre-attaque, les coups de pied arrêtés simples.</td></tr>
+    <tr><td><b>4. Après les Fêtes</b></td><td>janvier à la fin</td><td>Améliorer nos points faibles, renforcer nos points forts.</td></tr>
+  </tbody>
+</table></div>
+<div class="block">
+  <p class="btitle">Comment on travaille, et pourquoi</p>
+  <ul>
+    <li><b>On apprend en jouant.</b> La plupart du temps, c'est du jeu avec une règle qui oblige à faire le bon choix, pas des exercices où on attend en ligne.</li>
+    <li><b>Une idée revient plusieurs semaines.</b> Le losange et les hauteurs différentes ne s'apprennent pas en une fois : on les reprend jusqu'à ce qu'ils viennent tout seuls.</li>
+    <li><b>Toujours les mêmes mots.</b> Cinq mots, pour que tout le monde se comprenne vite sur le terrain.</li>
+    <li><b>Tout le monde joue partout.</b> À votre âge, on ne vous enferme pas dans un poste.</li>
+    <li><b>Pas de tactique compliquée.</b> Une forme simple qu'on comprend, plutôt qu'un système qu'on récite.</li>
+  </ul>
+</div>
+
+<h2>Séance par séance</h2>
+<details open><summary>Séance 5 · 30 octobre · étape 3, la saison commence</summary>
+<p><b>Pourquoi :</b> les matchs arrivent dans les deux prochaines semaines. On répète un jour de match, et on installe une routine fixe pour commencer chaque pratique.</p>
+<ul>
+  <li><b>Au programme :</b> la routine ; ballon perdu, les quatre derrière le ballon en 3 secondes ; notre touche et leur corner ; un match en deux demies, avec moins d'arrêts pour que le jeu coule.</li>
+  <li><b>Ce que l'entraîneur a vu :</b> à venir après la séance.</li>
+  <li><b>À la maison :</b> la routine, 10 minutes. Vendredi prochain, je vous demande combien de jours.</li>
+</ul></details>
+<details><summary>Séance 4 · 23 octobre · étape 2, la théorie puis le jeu</summary>
+<p><b>Pourquoi :</b> vous aviez demandé une pratique de plus, et vous vouliez comprendre comment gagner. Une heure pour comprendre le jeu, une heure pour le jouer.</p>
+<ul>
+  <li><b>Ce qu'on a fait :</b> les cinq postes, le losange, le repli, la contre-attaque et les 4 secondes du gardien, au tableau. Puis un match à deux équipes.</li>
+  <li><b>Ce que l'entraîneur a vu :</b> le projecteur et le Wi-Fi n'ont pas marché, on a perdu 25 minutes. La théorie est passée quand même, en version courte, sans vidéo. Dans le match, il a fallu arrêter souvent pour corriger les placements et les décisions.</li>
+  <li><b>Ce qu'on garde :</b> la théorie est maintenant dans ce guide, avec les dessins, pour la revoir à la maison. Et on arrête moins le jeu, pour qu'il coule.</li>
+</ul></details>
+<details><summary>Séance 3 · 16 octobre · étape 2, le gymnase complet</summary>
+<p><b>Pourquoi :</b> apprendre à se démarquer et à trouver le pivot, et défendre ensemble.</p>
+<ul>
+  <li><b>Ce qu'on a fait :</b> un échauffement en circuit, beaucoup d'appuis, avec le ballon. Puis deux ateliers : des tirs en W (passe, remise du pivot, tir) et <b>la boîte</b>, 4 contre 4, où seul le pivot peut entrer au milieu pour recevoir. Pour finir, des passes et des tirs entre deux plots.</li>
+  <li><b>Ce que l'entraîneur a vu :</b> la boîte était difficile au début, puis les corrections ont aidé. Mais beaucoup de bavardage et peu d'écoute ont coûté du temps, et il n'est pas resté de temps pour le match prévu.</li>
+  <li><b>Ce qu'on garde :</b> pour jouer plus, il faut écouter plus vite. Vous voulez gagner : il faut s'entraîner, pas seulement jouer.</li>
+  <li><b>À la maison :</b> le défi des plots, chaque jour : 10 squats, 10 fentes, 10 redressements, 10 pompes (20 pour ceux qui ont raté les plots).</li>
+</ul></details>
+<details><summary>Séance 2 · 9 octobre · étape 1, garder le ballon</summary>
+<p><b>Pourquoi :</b> la séance 1 a montré qu'on gardait mal le ballon et qu'on se mettait tous sur la même ligne. On a repris ces deux choses.</p>
+<ul>
+  <li><b>Ce qu'on a fait :</b> une routine d'arrivée avec les échelles et les mini-haies. Un rondo : garder le ballon, pousser le porteur vers le côté pour ralentir le jeu. Le gardien : couvrir l'angle sans plonger trop vite. Puis attaque contre défense, deux ailiers et un pivot contre deux défenseurs et le gardien.</li>
+  <li><b>Ce que l'entraîneur a vu :</b> les premières minutes, tout le monde était à plat, sur la même ligne. Après les explications, plus de mouvement, plus d'idées, et toujours une passe possible.</li>
+  <li><b>Ce qu'on garde :</b> les hauteurs différentes, et la défense qui pousse l'adversaire vers l'extérieur, jamais vers le milieu.</li>
+</ul></details>
+<details><summary>Séance 1 · 2 octobre · étape 1, se connaître</summary>
+<p><b>Pourquoi :</b> première pratique. Se connaître, dire ce qu'on attend de chacun, et voir où on en est.</p>
+<ul>
+  <li><b>Ce qu'on a fait :</b> nos valeurs et l'effort qu'on attend. Garder le ballon en carrés. Les postes et le losange au tableau. Le 3 contre 2 vers un but, avec deux mini-buts pour les défenseurs.</li>
+  <li><b>Ce que l'entraîneur a vu :</b> au début du 3 contre 2, tout le monde sur la même ligne, des passes droites, faciles à couper. La correction a pris : les ailiers à des hauteurs différentes, le pivot qui attaque le but. Le meilleur moment de la soirée, c'était le jeu avec les mini-buts.</li>
+  <li><b>Ce qu'on garde :</b> le losange et les hauteurs différentes reviennent à chaque séance.</li>
+</ul></details>
+</section>
+
+<!-- ================= VIDÉOS ================= -->
+<section class="panel" id="videos" role="tabpanel" hidden>
+<h2>Toutes les vidéos</h2>
+<p class="small">Choisies par l'entraîneur. D'autres s'ajoutent chaque semaine. Une vidéo à la fois, puis refais le geste avec un ballon.</p>
+<div class="block">
+  <p class="btitle">Une vidéo en anglais ?</p>
+  <p>Mets les sous-titres en français : dans YouTube, ouvre les réglages de la vidéo (la roue dentée), puis <b>Sous-titres</b>, puis <b>Traduire automatiquement</b>, puis <b>Français</b>. La traduction est automatique : elle n'est pas parfaite, mais elle aide.</p>
+</div>
+<div class="say">Sous chaque vidéo, dis si elle t'a été <b>utile</b> ou <b>pas pour toi</b>. Tu en as aimé <b id="avis-n">0</b>. Vendredi, dis-moi lesquelles : ça m'aide à choisir les prochaines.</div>
+<div id="v-all" style="display:flex;flex-direction:column;gap:12px"></div>
+</section>
+</div>
+
+<script>
+(function(){
+  // ---------- vidéos ----------
+  // st: 'v' = validée par le coach, visible partout ; 'a' = à valider, visible seulement dans l'aperçu (pas sur github.io)
+  var PUBLIC=/github\.io$/.test(location.hostname);
+  var VIDEOS=[
+    {sec:'r1',st:'v',h:'https://www.youtube.com/watch?v=QKmC5ixM9xk',b:'Touches du dessus (toe taps)',s:'Eastside FC · 24 s'},
+    {sec:'r1',st:'v',h:'https://www.youtube.com/watch?v=KaktBhbJUyg',b:'Toe taps, expliqué pour les jeunes',s:'Coach Dad · 5 min 29'},
+    {sec:'r2',st:'v',h:'https://www.youtube.com/watch?v=9lqcnQ4cWpY',b:'Rouler à la semelle (sole rolls)',s:'Anytime Soccer Training · 1 min 30'},
+    {sec:'r3',st:'v',h:'https://www.youtube.com/watch?v=fN4L3ypTTAY',b:'Tirer-tourner (pull back)',s:'SoccerDrive · 1 min 06'},
+    {sec:'r4',st:'v',h:'https://www.youtube.com/watch?v=_VZFP8jpVYo',b:'Intérieur-intérieur (bells) et touches',s:'San Diego Loyal · 25 s'},
+    {sec:'r4',st:'v',h:'https://www.youtube.com/watch?v=WkA7mMZXq00',b:'Passes contre un mur, seul',s:'Da Fonte Pro Training · 1 min 20 · avec permission seulement'},
+    {sec:'r5',st:'v',h:'https://www.youtube.com/watch?v=PX7sLU4ldv0',b:'Passe et contrôle avec la semelle',s:'Montreal Manic Football Academy · en français · 38 s'},
+    {sec:'r5',st:'v',h:'https://www.youtube.com/watch?v=xosJDm_WIR0',b:'Le contrôle semelle',s:'FUTSALZONE TV · en français · 1 min 14'},
+    {sec:'r7',st:'v',h:'https://www.youtube.com/watch?v=PFfSBC2xld0',b:'Tout le corps à la maison, sans matériel',s:'L\'entraînement du footballeur · 2 min 49'},
+    {sec:'r7',st:'v',h:'https://www.youtube.com/watch?v=rvZGxQpjv1s',b:'10 exercices de gainage pour footballeur',s:'Natural Evolution · en français · 4 min 46'},
+    {sec:'suivre',st:'v',h:'https://www.youtube.com/watch?v=-252rZPZuWA',b:'Maîtrise du ballon à la maison, 10 minutes à suivre',s:'Soheil Var · 11 min 23'},
+    {sec:'g1',st:'v',h:'https://www.youtube.com/watch?v=wNmZMaxsWQY',b:'La position d\'attente',s:'David Haynes · en anglais'},
+    {sec:'g1',st:'v',h:'https://www.youtube.com/watch?v=PwMWyuJ7qbY',b:'Les bases du gardien de futsal en 7 minutes',s:'David Haynes · futsal · en anglais · 7 min 15'},
+    {sec:'g2',st:'v',h:'https://www.youtube.com/watch?v=dAPWJuiQo3o',b:'Mains et coordination, à la maison',s:'International Goalkeeper Coaches Conference · 3 min 22'},
+    {sec:'g2',st:'v',h:'https://www.youtube.com/watch?v=tyMB956uAtM',b:'Exercices de gardien à faire seul à la maison, dans un carré',s:'RTG Academy · en français · 9 min 09'},
+    {sec:'g2',st:'v',h:'https://www.youtube.com/watch?v=wex3AD8oTg0',b:'Futsal : les gardiens à l\'entraînement',s:'Fédération française de football · en français · 1 min 36'},
+    {sec:'g3',st:'v',h:'https://www.youtube.com/watch?v=UedauOdgyG4',b:'Entraînement du gardien de futsal à la maison',s:'Futsal Keeper Tips · 7 min 45'},
+    {sec:'g3',st:'v',h:'https://www.youtube.com/watch?v=1lQ9_MmxV4s',b:'La relance à la main',s:'Olivier Launois · futsal · en français · 20 s'},
+    {sec:'g3',st:'v',h:'https://www.youtube.com/watch?v=2GEmOM4cZTM',b:'Futsal : le travail spécifique des gardiens',s:'Fédération française de football · en français · 2 min 08'},
+    {sec:'etude',st:'v',h:'https://www.youtube.com/watch?v=824i5giBWXU',b:'La tactique, pièce maîtresse du futsal ?',s:'Fédération française de football · en français · 3 min 39'},
+    {sec:'etude',st:'v',h:'https://www.youtube.com/watch?v=hBNrDLLH070',b:'Rotation et occupation de la largeur',s:'Samy Coach Futsal · U12 · en français · 1 min 10'},
+    {sec:'etude',st:'v',h:'https://www.youtube.com/watch?v=8-Q9DKFbuM4',b:'Défense de zone',s:'Samy Coach Futsal · U12 · en français · 44 s'},
+    {sec:'etude',st:'v',h:'https://www.youtube.com/watch?v=avhPlBiK5Qg',b:'Exemple de jeu à 5 en futsal',s:'i-futsal · en français · 1 min 42'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=W1a4Mgf1-iM&t=155s',b:'Le 1 contre 1 : de côté',s:'Coach Thiago · en anglais · de 2:35 à 3:22'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=W1a4Mgf1-iM&t=262s',b:'Le 1 contre 1 : attendre',s:'Coach Thiago · en anglais · de 4:22 à 5:06'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=W1a4Mgf1-iM&t=414s',b:'Le 1 contre 1 : mets le pied',s:'Coach Thiago · en anglais · de 6:54 à 7:49'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=W1a4Mgf1-iM&t=559s',b:'Le repli : le deuxième défenseur',s:'Coach Thiago · en anglais · de 9:19 à 10:47'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=Dv0utSGEQt8',b:'1 contre 1 en défense',s:'Umbro · en anglais'},
+    {sec:'jeu',st:'v',h:'https://www.youtube.com/watch?v=c_nq0Ka_RWs',b:'Le rondo 4 contre 1',s:'Paul Spacey · en anglais'},
+    {sec:'touche',st:'v',h:'https://www.youtube.com/watch?v=Cpu79qsoYWU',b:'Une remise en jeu',s:'i-futsal · animation · en français · 17 s'},
+    {sec:'touche',st:'v',h:'https://www.youtube.com/watch?v=NFRHOkt3_kU',b:'Kick-in #1',s:'Futsal Academy · 1 min 03'},
+    {sec:'corner-def',st:'v',h:'https://www.youtube.com/watch?v=WhLWqkJ2Pog',b:'Défendre sur corner',s:'Samy Coach Futsal · U12 · en français · 1 min 23'},
+    {sec:'corner-def',st:'v',h:'https://www.youtube.com/watch?v=AX-qM3winXg',b:'Le gardien sur un corner',s:'Futsal Keeper Tips · 3 min 54'},
+    {sec:'corner-att',st:'v',h:'https://www.youtube.com/watch?v=3ImEQF4pX60',b:'Action de corner 1',s:'i-futsal · animation · en français · 15 s'},
+    {sec:'corner-att',st:'v',h:'https://www.youtube.com/watch?v=AH_5Bjoyvs8',b:'Action de corner 2',s:'i-futsal · animation · en français · 19 s'},
+    {sec:'corner-att',st:'v',h:'https://www.youtube.com/watch?v=rHgKtRUbWGY',b:'Action de corner 3',s:'i-futsal · animation · en français · 16 s'},
+    {sec:'coupfranc',st:'v',h:'https://www.youtube.com/watch?v=zj5Mc5UF0Qs',b:'Un coup franc',s:'i-futsal · animation · en français · 16 s'}
+  ];
+  var SECNAME={r7:'Routine',r1:'Routine',r2:'Routine',r3:'Routine',r4:'Routine',r5:'Routine',r6:'Routine',suivre:'Routine',g1:'Gardiens',g2:'Gardiens',g3:'Gardiens',etude:'À étudier, en français',jeu:'Le jeu','touche':'Coups de pied arrêtés','corner-def':'Coups de pied arrêtés','corner-att':'Coups de pied arrêtés',coupfranc:'Coups de pied arrêtés'};
+  var shown=VIDEOS.filter(function(v){return v.st==='v'||!PUBLIC;});
+  // ton avis sur chaque vidéo, gardé dans ce navigateur seulement
+  var AV='avis-v1', avis={};
+  try{avis=JSON.parse((store()&&store().getItem(AV))||'{}');}catch(e){avis={};}
+  function vli(v){var id=v.h.split('v=')[1];
+    return '<li><a target="_blank" rel="noopener" href="'+v.h+'"><b>'+v.b+(v.st==='a'?'<span class="tag">À VALIDER</span>':'')+'</b><span>'+v.s+'</span></a>'
+      +'<span class="avis" data-id="'+id+'"><button type="button" data-a="up" aria-label="Utile">👍 Utile</button><button type="button" data-a="down" aria-label="Pas pour moi">👎 Pas pour moi</button></span></li>';}
+  function paintAvis(){[].slice.call(document.querySelectorAll('.avis')).forEach(function(s){[].slice.call(s.querySelectorAll('button')).forEach(function(b){b.setAttribute('aria-pressed',avis[s.dataset.id]===b.dataset.a?'true':'false');});});
+    var n=Object.keys(avis).filter(function(k){return avis[k]==='up';}).length, el=document.getElementById('avis-n'); if(el) el.textContent=n;}
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.avis button');if(!b)return;var id=b.parentNode.dataset.id;
+    if(avis[id]===b.dataset.a)delete avis[id];else avis[id]=b.dataset.a;try{store().setItem(AV,JSON.stringify(avis));}catch(x){}paintAvis();try{scoreboard();}catch(x){}});
+  [].slice.call(document.querySelectorAll('ul.vids[data-sec]')).forEach(function(ul){
+    var mine=shown.filter(function(v){return v.sec===ul.dataset.sec;});
+    if(mine.length) ul.innerHTML=mine.map(vli).join(''); else ul.parentNode.removeChild(ul);
+  });
+  var groups={}; shown.forEach(function(v){var g=SECNAME[v.sec];(groups[g]=groups[g]||[]).push(v);});
+  document.getElementById('v-all').innerHTML=Object.keys(groups).map(function(g){return '<h2>'+g+'</h2><ul class="vids">'+groups[g].map(vli).join('')+'</ul>';}).join('');
+  paintAvis();
+
+  // ---------- onglets ----------
+  var tabs=[].slice.call(document.querySelectorAll('nav.tabs button'));
+  var IDS=tabs.map(function(b){return b.getAttribute('aria-controls');});
+  function store(){try{return window.localStorage;}catch(e){return null;}}
+  function show(id){
+    tabs.forEach(function(b){var on=b.getAttribute('aria-controls')===id;b.setAttribute('aria-selected',on?'true':'false');document.getElementById(b.getAttribute('aria-controls')).hidden=!on;});
+    try{store()&&store().setItem('onglet',id);}catch(e){}
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('aria-controls'));window.scrollTo(0,0);});});
+  var start='accueil',h=(location.hash||'').replace('#','');
+  if(IDS.indexOf(h)>=0)start=h;else{try{var s=store()&&store().getItem('onglet');if(IDS.indexOf(s)>=0)start=s;}catch(e){}}
+  show(start);
+
+  // ---------- le carnet : tout reste dans ce navigateur ----------
+  var KEY='carnet-v1', FIELDS=[['routine','Routine'],['touches','Touches'],['etude','Étude'],['autre','Autre']];
+  var data={}, ok=true;
+  try{var raw=store()&&store().getItem(KEY);data=raw?JSON.parse(raw):{};if(!store())ok=false;}catch(e){ok=false;data={};}
+  try{store().setItem('carnet-test','1');store().removeItem('carnet-test');}catch(e){ok=false;}
+  if(!ok)document.getElementById('nostore').hidden=false;
+  function save(){try{store().setItem(KEY,JSON.stringify(data));}catch(e){document.getElementById('nostore').hidden=false;}}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function monday(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-(x.getDay()+6)%7);return x;}
+  function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x;}
+  var JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  var MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  var today=new Date(), thisWeek=monday(today), week=thisWeek;
+  // minutes estimées : routine 10, touches 5, étude 3 (l'objectif de 18 minutes de Khalid) ; « autre » n'est pas compté, sa durée varie
+  var MIN={routine:10,touches:5,etude:3};
+  function minutesOf(k){var r=data[k]||{},t=0;Object.keys(MIN).forEach(function(f){if(r[f])t+=MIN[f];});return t;}
+  function countWeek(m,f){var c=0;for(var i=0;i<7;i++){var r=data[iso(addDays(m,i))];if(r&&r[f])c++;}return c;}
+  function clean(k){var r=data[k];if(!r)return;if(!r.autre)delete r.autreTxt;if(!Object.keys(r).length)delete data[k];}
+  function render(){
+    var wrap=document.getElementById('days');wrap.innerHTML='';
+    var end=addDays(week,6);
+    document.getElementById('wlabel').textContent=week.getDate()+' '+MOIS[week.getMonth()]+' au '+end.getDate()+' '+MOIS[end.getMonth()];
+    document.getElementById('wnext').disabled=iso(week)===iso(thisWeek);
+    for(var i=0;i<7;i++) dayBox(wrap,i);
+    scoreboard();
+  }
+  // un jour = sa propre fonction, pour que chaque bouton garde SA date
+  function dayBox(wrap,i){
+    var d=addDays(week,i),k=iso(d);
+    var box=document.createElement('div');box.className='day'+(k===iso(today)?' today':'');
+    var m=minutesOf(k);
+    box.innerHTML='<p class="d">'+JOURS[i]+' '+d.getDate()+' '+MOIS[d.getMonth()]+(k===iso(today)?' · aujourd\'hui':'')
+      +(m?' <span class="small" style="font-family:var(--body)">· '+m+' min'+(m>=18?' ✓':'')+'</span>':'')+'</p>';
+    var ch=document.createElement('div');ch.className='chips';
+    FIELDS.forEach(function(f){
+      var b=document.createElement('button');b.type='button';b.textContent=f[1];
+      b.setAttribute('aria-pressed',(data[k]&&data[k][f[0]])?'true':'false');
+      b.addEventListener('click',function(){var r=data[k]||{};if(r[f[0]])delete r[f[0]];else r[f[0]]=1;data[k]=r;clean(k);save();render();});
+      ch.appendChild(b);
+    });
+    box.appendChild(ch);
+    if(data[k]&&data[k].autre){
+      var inp=document.createElement('input');inp.type='text';inp.maxLength=120;inp.placeholder='Qu\'est-ce que tu as fait ? Ex. : pratique avec mon club, 1 h';
+      inp.setAttribute('aria-label','Autre entraînement, '+JOURS[i]);inp.value=data[k].autreTxt||'';
+      inp.addEventListener('input',function(){data[k].autreTxt=inp.value;save();});
+      box.appendChild(inp);
+    }
+    wrap.appendChild(box);
+  }
+  function scoreboard(){
+    var r=countWeek(thisWeek,'routine');
+    document.getElementById('s-routine').textContent=r;
+    var mins=0;for(var j=0;j<7;j++)mins+=minutesOf(iso(addDays(thisWeek,j)));
+    document.getElementById('s-minutes').textContent=mins;
+    document.getElementById('s-etude').textContent=countWeek(thisWeek,'etude');
+    var autres=[];for(var i=0;i<7;i++){var x=data[iso(addDays(thisWeek,i))];if(x&&x.autre)autres.push(x.autreTxt||'autre entraînement');}
+    var liked=Object.keys(avis).filter(function(x){return avis[x]==='up';}).length;
+    document.getElementById('vendredi').textContent='Vendredi, dis à l\'entraîneur : « Routine : '+r+' jour'+(r>1?'s':'')+' cette semaine, environ '+mins+' minutes'+(autres.length?'. Autre : '+autres.join(', '):'')+(liked?'. Vidéos utiles : '+liked:'')+'. »';
+    var hist=document.getElementById('hist'),lab=document.getElementById('histlab');hist.innerHTML='';lab.innerHTML='';
+    for(var w=3;w>=0;w--){var m=addDays(thisWeek,-7*w),c=countWeek(m,'routine');
+      var bar=document.createElement('div');bar.style.height=(c/7*100)+'%';bar.innerHTML='<span>'+c+'</span>';hist.appendChild(bar);
+      var l=document.createElement('span');l.textContent=w===0?'cette sem.':m.getDate()+' '+MOIS[m.getMonth()];lab.appendChild(l);}
+  }
+  document.getElementById('wprev').addEventListener('click',function(){week=addDays(week,-7);render();});
+  document.getElementById('wnext').addEventListener('click',function(){if(iso(week)!==iso(thisWeek)){week=addDays(week,7);render();}});
+  render();
+
+  // ---------- les dessins ----------
+  function court(inner,bench){
+    var H=bench?268:240;
+    return '<svg class="diagram" viewBox="0 0 400 '+H+'" role="img">'
+      +'<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--ink)"/></marker></defs>'
+      +'<rect class="court" x="10" y="10" width="380" height="220"/>'
+      +'<line class="court" x1="200" y1="10" x2="200" y2="230"/><circle class="court" cx="200" cy="120" r="26"/>'
+      +'<path class="court" d="M10,74 A46,46 0 0 1 56,120 A46,46 0 0 1 10,166"/>'
+      +'<path class="court" d="M390,74 A46,46 0 0 0 344,120 A46,46 0 0 0 390,166"/>'
+      +'<rect class="court" x="2" y="104" width="8" height="32"/><rect class="court" x="390" y="104" width="8" height="32"/>'
+      +'<text class="lg" x="16" y="24">notre but</text><text class="lg" x="340" y="24">leur but</text>'
+      +'<circle class="att" cx="262" cy="236" r="4"/><text class="lg" x="270" y="239">nous</text><circle class="def" cx="312" cy="236" r="4"/><text class="lg" x="320" y="239">eux</text>'
+      +(bench?'<text class="lg" x="12" y="260">à placer :</text>'+P('gk',110,257,'G')+P('att',150,257,'D')+P('att',190,257,'A')+P('att',230,257,'A')+P('att',270,257,'P')+B(310,257):'')
+      +(inner||'')+'</svg>';
+  }
+  function P(cls,x,y,letter){return '<g class="tok" transform="translate('+x+','+y+')"><circle class="'+cls+'" r="10"/>'+(letter?'<text class="in" text-anchor="middle" dy="4">'+letter+'</text>':'')+'</g>';}
+  function B(x,y){return '<g class="tok" transform="translate('+x+','+y+')"><circle class="ball" r="4.5"/></g>';}
+  function A(x1,y1,x2,y2){return '<path class="arrow" d="M'+x1+','+y1+' L'+x2+','+y2+'" marker-end="url(#ah)"/>';}
+  function D(x1,y1,x2,y2){return '<path class="dia" d="M'+x1+','+y1+' L'+x2+','+y2+'"/>';}
+  function DA(x1,y1,x2,y2){return '<path class="dia" d="M'+x1+','+y1+' L'+x2+','+y2+'" marker-end="url(#ah)"/>';}
+  function X(x,y){return '<path class="lost" d="M'+(x-6)+','+(y-6)+' L'+(x+6)+','+(y+6)+' M'+(x+6)+','+(y-6)+' L'+(x-6)+','+(y+6)+'"/>';}
+  function T(x,y,s,cls){return '<text class="'+(cls||'lg')+'" x="'+x+'" y="'+y+'">'+s+'</text>';}
+  function Z(x,y,w,h,cls){return '<rect class="'+cls+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="6"/>';}
+  // les trois couloirs : côté, centre, côté
+  var LANES='<line class="lane" x1="10" y1="83" x2="390" y2="83"/><line class="lane" x1="10" y1="157" x2="390" y2="157"/>';
+  var SLIDES=[
+    /*0*/ {q:'À toi : place les cinq.',r:'Glisse G, D, A, A, P et le ballon où tu penses qu\'ils vont. Puis compare avec le dessin suivant.',svg:court('',true)},
+    /*1*/ {q:'On a le ballon : les cinq postes.',r:'<b>D</b> le plus près de notre but. Les deux <b>A</b> larges, jamais à la même hauteur. <b>P</b> le plus haut, dos à leur but.',svg:court(P('gk',32,120,'G')+P('att',112,120,'D')+P('att',196,52,'A')+P('att',226,188,'A')+P('att',318,120,'P')+B(124,112))},
+    /*2*/ {q:'Eux ont le ballon : on est où ?',r:'Tout le monde <b>entre le ballon et notre but</b>. D surveille leur pivot. Notre P freine leur porteur. Les A rentrent.',svg:court(P('gk',32,120,'G')+P('def',300,120,'')+B(288,128)+P('def',118,98,'')+P('def',270,50,'')+P('def',270,190,'')+P('att',96,124,'D')+P('att',176,72,'A')+P('att',176,168,'A')+P('att',244,120,'P'))},
+    /*3*/ {q:'Le losange.',r:'<b>Une forme, pas une place.</b> Des hauteurs différentes : celui qui a le ballon a trois passes possibles (les pointillés).',svg:court('<path class="dia" d="M112,120 L200,56 L318,120 L224,186 Z"/>'+P('gk',32,120,'G')+P('att',112,120,'D')+P('att',200,56,'A')+P('att',224,186,'A')+P('att',318,120,'P')+B(124,112))},
+    /*4*/ {q:'Le ballon va sur un côté.',r:'Tout le bloc <b>décale</b>. Chacun se met là où l\'adversaire ne coupe pas la passe.',svg:court(P('gk',32,120,'G')+P('att',230,56,'A')+B(242,62)+P('def',262,86,'')+P('def',206,124,'')+P('def',300,156,'')+P('att',112,120,'D')+A(124,114,150,92)+P('att',224,186,'A')+A(226,176,236,150)+P('att',318,120,'P')+A(316,110,300,92)+DA(230,56,150,92)+DA(230,56,236,150)+DA(230,56,300,92))},
+    /*5*/ {q:'Le ballon au pivot.',r:'Il <b>protège</b> le ballon et le <b>remet</b> à celui qui arrive. Pas obligé de se retourner.',svg:court(P('gk',32,120,'G')+P('att',318,120,'P')+B(306,114)+P('def',338,122,'')+P('att',196,52,'A')+A(208,56,290,74)+P('att',226,188,'A')+A(238,184,300,170)+P('att',150,120,'D')+DA(312,124,300,164))},
+    /*6*/ {q:'Ballon perdu devant.',r:'Tous <b>derrière le ballon</b>, entre le ballon et notre but. Freiner, ralentir, bloquer.',svg:court('<rect class="zone" x="56" y="40" width="130" height="160" rx="8"/>'+P('gk',32,120,'G')+P('def',296,96,'')+B(284,104)+P('att',250,60,'A')+A(240,60,150,60)+P('att',236,180,'A')+A(226,180,150,180)+P('att',330,150,'P')+A(320,148,176,130)+P('att',180,110,'D')+A(172,110,120,110))},
+    /*7*/ {q:'Ballon perdu sur un côté.',r:'L\'<b>A</b> le plus proche <b>freine</b>. Le <b>P</b> redescend un peu plus bas que lui. L\'autre A rentre. D reste derrière.',svg:court(A(306,116,196,106)+A(216,180,156,148)+P('def',236,60,'')+B(224,66)+P('def',300,60,'')+P('def',290,170,'')+P('att',204,72,'A')+P('att',318,120,'P')+P('att',226,188,'A')+P('att',112,120,'D')+P('gk',32,120,'G'))},
+    /*8*/ {q:'Replié : on est serrés.',r:'Le premier <b>freine</b>, de côté. Les trois autres <b>couvrent</b>. Pas de trou entre nous.',svg:court(P('gk',32,120,'G')+P('def',236,120,'')+B(224,126)+P('def',290,56,'')+P('def',290,184,'')+P('def',340,120,'')+P('att',194,118,'P')+P('att',124,72,'A')+P('att',124,168,'A')+P('att',84,120,'D'))},
+    /*9*/ {q:'Le 1 contre 1.',r:'Tu freines <b>de côté</b> : le chemin du but est fermé (la croix), il ne lui reste que le côté. Tu <b>mets le pied</b> quand le ballon s\'éloigne de son pied.',svg:court(D(250,126,60,120)+X(150,122)+A(250,126,170,40)+P('def',262,120,'')+B(250,126)+P('att',204,106,'D')+P('gk',32,120,'G'))},
+    /*10*/{q:'Notre touche.',r:'Courte au <b>D</b> : sûr. Longue au <b>P</b> : si c\'est ouvert. 4 secondes.',svg:court(DA(220,14,160,98)+DA(220,14,312,118)+DA(220,14,278,188)+B(220,10)+P('att',214,26,'A')+P('att',150,104,'D')+P('att',320,124,'P')+P('att',284,196,'A')+T(330,24,'4 s'))},
+    /*11*/{q:'Leur corner.',r:'Un <b>A</b> au premier poteau. Un joueur sur le tireur, à 5 m. D et P font <b>la boîte</b> devant le gardien.',svg:court('<circle class="dia" cx="12" cy="12" r="47"/>'+B(14,14)+P('def',26,30,'')+P('att',52,46,'A')+P('att',24,96,'A')+P('gk',24,124,'G')+P('att',68,130,'D')+P('att',98,100,'P')+P('def',80,84,'')+P('def',96,146,'')+P('def',150,110,''))},
+    /*12*/{q:'Le gardien relance.',r:'<b>Le gardien est le premier attaquant.</b> À la main, 4 secondes. Ouvert : on y va. Fermé : on garde.',svg:court(P('gk',32,120,'G')+B(44,112)+'<text class="big" x="22" y="196">4 s</text>'+A(50,112,180,60)+A(50,124,180,180)+P('att',196,52,'A')+A(208,52,330,60)+P('att',196,188,'A')+A(208,188,330,180)+P('att',112,120,'D')+P('att',318,120,'P'))},
+    /*13*/{q:'Récupéré, c\'est fermé.',r:'<b>On garde.</b> On refait le losange, tête levée, on cherche le trou.',svg:court('<path class="dia" d="M150,120 L214,56 L300,120 L224,186 Z"/>'+P('gk',32,120,'G')+P('att',150,120,'D')+B(162,114)+P('att',214,56,'A')+P('att',224,186,'A')+P('att',300,120,'P')+P('def',280,70,'')+P('def',280,170,'')+P('def',330,120,'')+P('def',250,120,''))},
+    /*14*/{q:'Contre-attaque : un reste derrière.',r:'Trois partent vers l\'avant. <b>D reste derrière</b>, au milieu. Si on perd le ballon, il est déjà là.',svg:court(P('gk',32,120,'G')+P('att',150,120,'D')+T(126,146,'il reste')+P('att',220,60,'A')+B(232,66)+A(232,60,320,52)+P('att',236,180,'A')+A(248,180,330,186)+P('att',280,120,'P')+A(292,120,350,120)+P('def',210,120,'')+P('def',330,80,''))},
+    /*15*/{q:'Le repli : en ligne droite.',r:'Chacun revient <b>tout droit</b> derrière le ballon, d\'où il est. Pas de détour en diagonale (le trajet barré) pour retrouver sa place du début.',svg:court(P('def',250,150,'')+B(238,156)+P('att',300,60,'A')+A(288,60,200,60)+P('att',320,190,'A')+A(308,190,214,190)+D(320,190,150,90)+X(236,140)+P('att',340,120,'P')+A(328,120,230,120)+P('att',190,110,'D')+A(178,110,130,110)+P('gk',32,120,'G'))},
+    /*16*/{q:'Il part seul : tu cours quand même.',r:'Tu ne t\'arrêtes <b>jamais</b>. Le gardien arrête, le tireur rate, il y a un <b>rebond</b> : tu dois être là. Et il se sent poursuivi, il se presse.',svg:court(P('gk',32,120,'G')+P('def',110,120,'')+B(98,124)+A(110,120,62,120)+P('att',170,126,'A')+A(158,126,96,128)+T(66,150,'rebond ?')+P('att',240,70,'P')+A(228,72,120,96))},
+    /*17*/{q:'La zone du pivot.',r:'<b style="color:var(--court)">Bleu</b> : couloir du centre, tout en haut, jusqu\'aux poteaux. <b>Orange</b> : il redescend, premier défenseur, devant notre D.',svg:court(LANES+Z(270,85,118,70,'zb')+Z(165,85,100,70,'zs')+P('att',350,120,'P')+T(276,98,'avec le ballon')+T(170,98,'sans le ballon'))},
+    /*18*/{q:'La zone de l\'ailier.',r:'<b style="color:var(--court)">Bleu</b> : son couloir de côté, sur toute la longueur, large. <b>Orange</b> : il rentre vers le centre, dans notre moitié.',svg:court(LANES+Z(130,12,258,69,'zb')+Z(60,50,140,70,'zs')+P('att',290,45,'A')+T(140,24,'avec le ballon')+T(66,64,'sans le ballon'))},
+    /*19*/{q:'La zone du défenseur.',r:'<b style="color:var(--court)">Bleu</b> : couloir du centre, en bas, derrière le ballon. C\'est lui qui reste derrière. <b>Orange</b> : devant notre gardien, sur leur pivot.',svg:court(LANES+Z(110,85,100,70,'zb')+Z(50,85,70,70,'zs')+P('att',150,120,'D')+T(116,98,'avec le ballon')+T(54,150,'sans'))},
+    /*20*/{q:'La zone du gardien.',r:'Sa surface. Avec le ballon : il relance vite, à la main, en 4 secondes. Sans le ballon : il protège son but et parle à ses défenseurs.',svg:court(LANES+Z(12,62,62,116,'zb')+Z(12,76,44,88,'zs')+P('gk',32,120,'G')+T(60,58,'sa surface'))},
+    /*21*/{q:'Le pivot dérange, puis remonte.',r:'1. Il fonce aux <b>poteaux</b> : les défenseurs reculent avec lui. 2. Le <b>milieu s\'ouvre</b>. 3. Il <b>remonte</b>, reçoit, et <b>remet</b> à un ailier.',svg:court(LANES+'<rect class="zone" x="230" y="92" width="80" height="56" rx="8"/>'+T(246,124,'espace')+P('att',360,104,'P')+P('def',372,126,'')+P('def',346,82,'')+A(352,108,312,118)+P('att',200,50,'A')+B(212,54)+DA(212,56,300,116)+P('att',230,190,'A')+DA(306,124,250,182)+P('att',120,120,'D')+P('gk',32,120,'G'))}
+  ];
+  var TOOL='move';
+  [].slice.call(document.querySelectorAll('[data-tool]')).forEach(function(b){b.addEventListener('click',function(){TOOL=b.dataset.tool;[].slice.call(document.querySelectorAll('[data-tool]')).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});});});
+  function segDist(px,py,x1,y1,x2,y2){var dx=x2-x1,dy=y2-y1,l=dx*dx+dy*dy,t=l?Math.max(0,Math.min(1,((px-x1)*dx+(py-y1)*dy)/l)):0;return Math.hypot(px-(x1+t*dx),py-(y1+t*dy));}
+  function board(svg,tools){
+    var drag=null,draw=null;
+    function pt(e){var p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;var m=svg.getScreenCTM();return m?p.matrixTransform(m.inverse()):p;}
+    svg.addEventListener('pointerdown',function(e){
+      var p=pt(e),g=e.target.closest?e.target.closest('g.tok'):null, tool=tools?TOOL:'move';
+      if(tool==='erase'){var best=null,bd=14;
+        [].slice.call(svg.querySelectorAll('path.arrow,path.dia,path.lost')).forEach(function(path){var d=path.getAttribute('d')||'',pts=(d.match(/-?[\d.]+,-?[\d.]+/g)||[]).map(function(q){var a=q.split(',');return[+a[0],+a[1]];});
+          for(var i=1;i<pts.length;i++){var dd=segDist(p.x,p.y,pts[i-1][0],pts[i-1][1],pts[i][0],pts[i][1]);if(dd<bd){bd=dd;best=path;}}});
+        if(best)best.parentNode.removeChild(best);e.preventDefault();return;}
+      if(tool==='arrow'||tool==='pass'){var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('class',tool==='arrow'?'arrow':'dia');path.setAttribute('marker-end','url(#'+svg.dataset.mid+')');
+        path.setAttribute('d','M'+Math.round(p.x)+','+Math.round(p.y)+' L'+Math.round(p.x)+','+Math.round(p.y));
+        var ft=svg.querySelector('g.tok');if(ft)svg.insertBefore(path,ft);else svg.appendChild(path);
+        draw={path:path,x:p.x,y:p.y};e.preventDefault();try{svg.setPointerCapture(e.pointerId);}catch(x){}return;}
+      if(!g)return;
+      var t=/translate\(([-\d.]+),([-\d.]+)\)/.exec(g.getAttribute('transform')||'')||[0,0,0];
+      drag={g:g,ox:+t[1]-p.x,oy:+t[2]-p.y};g.classList.add('held');svg.appendChild(g);e.preventDefault();
+      try{svg.setPointerCapture(e.pointerId);}catch(x){}
+    });
+    svg.addEventListener('pointermove',function(e){var p=pt(e);
+      if(drag)drag.g.setAttribute('transform','translate('+Math.round(p.x+drag.ox)+','+Math.round(p.y+drag.oy)+')');
+      else if(draw)draw.path.setAttribute('d','M'+Math.round(draw.x)+','+Math.round(draw.y)+' L'+Math.round(p.x)+','+Math.round(p.y));});
+    function up(e){if(drag){drag.g.classList.remove('held');drag=null;}
+      if(draw){var p=pt(e);if(Math.hypot(p.x-draw.x,p.y-draw.y)<8)draw.path.parentNode.removeChild(draw.path);draw=null;}}
+    svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+    [].slice.call(svg.querySelectorAll('g.tok')).forEach(function(g){svg.appendChild(g);});
+  }
+  // chaque dessin a sa propre pointe de flèche : un id partagé pointait vers une copie cachée dans un autre onglet, et les pointes disparaissaient
+  var seq=0;
+  function ownMarker(svg){var id='ah'+(++seq);svg.querySelector('marker').id=id;svg.dataset.mid=id;
+    [].slice.call(svg.querySelectorAll('[marker-end]')).forEach(function(p){p.setAttribute('marker-end','url(#'+id+')');});}
+  function slideCard(s,tools){
+    var a=document.createElement('article');a.className='slide';
+    function paint(){a.innerHTML='<p class="q">'+s.q+'</p>'+s.svg+'<p class="r">'+s.r+'</p>';ownMarker(a.querySelector('svg'));board(a.querySelector('svg'),tools);
+      var b=document.createElement('button');b.type='button';b.className='reset';b.textContent='Remettre le dessin';b.addEventListener('click',paint);a.appendChild(b);}
+    paint();return a;
+  }
+  var list=document.getElementById('slidelist');
+  SLIDES.forEach(function(s){list.appendChild(slideCard(s,true));});
+  [].slice.call(document.querySelectorAll('[data-slide]')).forEach(function(el){el.appendChild(slideCard(SLIDES[+el.dataset.slide],false));});
+})();
+</script>
+</body>
+</html>
