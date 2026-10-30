@@ -69,7 +69,9 @@ details[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
 details>ul,details>ol,details>p{padding-bottom:12px}
 .src{display:inline-block;font-size:.72rem;font-weight:700;color:var(--court);background:var(--courtsoft);padding:1px 6px;border-radius:4px;white-space:nowrap}
 .tablewrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;min-width:440px;font-size:.95rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+td,th{overflow-wrap:break-word}
+td:first-child,th:first-child{white-space:nowrap;width:1%}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 tr:last-child td{border-bottom:0}
@@ -121,6 +123,9 @@ tr:last-child td{border-bottom:0}
 .hist{display:flex;gap:6px;align-items:flex-end;height:70px;margin-top:18px}
 .hist div{flex:1;background:var(--court);border-radius:4px 4px 0 0;min-height:3px;position:relative}
 .hist div span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:.8rem;font-weight:700;color:var(--ink)}
+.tour{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.tour .when{font-family:var(--display);font-weight:700;font-size:1.2rem}
+.tour .where{font-weight:600;color:var(--muted)}
 .histlab{display:flex;gap:6px}.histlab span{flex:1;text-align:center;font-size:.75rem;color:var(--muted)}
 a{color:var(--court)}
 </style>
@@ -141,7 +146,7 @@ a{color:var(--court)}
   <button role="tab" aria-controls="tableau" aria-selected="false">Tableau</button>
   <button role="tab" aria-controls="regles" aria-selected="false">Règles</button>
   <button role="tab" aria-controls="mots" aria-selected="false">Mots</button>
-  <button role="tab" aria-controls="seances" aria-selected="false">Séances</button>
+  <button role="tab" aria-controls="seances" aria-selected="false">Saison</button>
   <button role="tab" aria-controls="videos" aria-selected="false">Vidéos</button>
 </nav>
 
@@ -342,6 +347,8 @@ a{color:var(--court)}
 <p>On vient de prendre le ballon. Devant, c'est <b>ouvert</b> (plus de nous que d'eux) ? On y va, vite, vers l'avant. C'est <b>fermé</b> (ils sont revenus) ? On garde le ballon et on refait le losange.</p></div>
 <div class="rule"><b>Règle de la saison :</b> quand on attaque, <b>un joueur reste toujours derrière</b>. Jamais les quatre en avant. Si on perd le ballon, il est déjà là.</div>
 <div data-slide="14"></div>
+<div data-slide="23"></div>
+<div data-slide="24"></div>
 
 <h2>On perd le ballon</h2>
 <div class="rule"><b>Premier réflexe :</b> on recule tout de suite, <b>derrière le ballon</b>. Un repli rapide. Ça ralentit leur attaque.</div>
@@ -379,6 +386,7 @@ a{color:var(--court)}
 <p>Un joueur au <b>premier poteau</b>. Un joueur sur le tireur, à 5 mètres. Les autres font <b>la boîte</b> devant le gardien. Chacun surveille le joueur à côté de lui, pas seulement le ballon. S'ils jouent court sur le côté : <b>un seul sort</b>, les autres gardent la boîte.</p>
 <ul class="vids" data-sec="corner-def"></ul></div>
 <div data-slide="11"></div>
+<div data-slide="22"></div>
 <div class="block"><p class="btitle">Notre corner</p>
 <p>Ballon immobile dans l'arc de coin, au pied, 4 secondes. Ici, on peut marquer directement.</p>
 <ul class="vids" data-sec="corner-att"></ul></div>
@@ -472,6 +480,37 @@ a{color:var(--court)}
 
 <!-- ================= SÉANCES ================= -->
 <section class="panel" id="seances" role="tabpanel" hidden>
+<h2>À venir</h2>
+<div class="block">
+  <p class="btitle">Les tournois</p>
+  <p class="small">Deux matchs par tournoi. Vérifie le site du RSEQ Montérégie avant de partir : une annulation y est affichée en rouge sur la page principale.</p>
+  <div id="tournois" style="display:flex;flex-direction:column;gap:8px">
+  <div class="tour" data-d="2026-11-15"><p class="when">Dim. 15 nov.</p><p class="where">É.S. Fadette</p><p>9h00 contre De Chambly<br>12h00 contre Fadette 2</p></div>
+  <div class="tour" data-d="2026-12-12"><p class="when">Sam. 12 déc.</p><p class="where">É.S. Paul-Germain-Ostiguy</p><p>9h00 contre P.-G.-Ostiguy 1<br>12h00 contre Mgr-Euclide-Théberge</p></div>
+  <div class="tour" data-d="2027-01-10"><p class="when">Dim. 10 janv.</p><p class="where">É.S. de Chambly</p><p>10h00 contre François-Williams<br>12h00 contre Fadette 2</p></div>
+  <div class="tour" data-d="2027-02-06"><p class="when">Sam. 6 févr.</p><p class="where"><b>Chez nous</b>, É.S. du Grand-Coteau</p><p>9h00 contre De Chambly<br>13h00 contre P.-G.-Ostiguy 1</p></div>
+  <div class="tour" data-d="2027-04-04"><p class="when">Dim. 4 avr.</p><p class="where">É.S. Mgr-Euclide-Théberge</p><p>9h00 contre Mgr-Euclide-Théberge<br>13h00 contre François-Williams</p></div>
+</div>
+  <p class="say" id="prochain"></p>
+</div>
+<div class="block">
+  <p class="btitle">Les entraînements</p>
+  <p>Le <b>vendredi, 16h30 à 18h00, Gymnase 2</b>. Arrive un peu avant : à 16h30, on commence par la routine. Sortie à 18h00, la ville prend la salle.</p>
+  <p class="small"><b>Pas d'entraînement</b> les vendredis 20 novembre, 12 février, 5 mars et 26 mars, ni pendant les Fêtes (25 décembre, 1er janvier). Dernier entraînement : 30 avril. Les absences se signalent dans Mon Club Sportif.</p>
+</div>
+<div class="block">
+  <p class="btitle">Le jour du match</p>
+  <ul>
+    <li><b>Avant de partir :</b> le site du RSEQ Montérégie, pour une annulation de dernière minute.</li>
+    <li><b>Dans ton sac :</b> souliers de gymnase, bouteille d'eau, un cadenas pour le vestiaire. Ne laisse rien sans surveillance.</li>
+    <li><b>Les chandails :</b> si les uniformes ne sont pas arrivés, l'entraîneur donne des chandails ou des dossards prêtés à l'arrivée. Tu le remets à la fin de tes matchs, sans exception : ils servent à d'autres équipes.</li>
+    <li><b>Les parents sont les bienvenus :</b> apportez une chaise pliante et des souliers de rechange (les bottes ne sont pas permises dans les gymnases).</li>
+    <li><b>Transport :</b> le clavardage de Mon Club Sportif sert à organiser le covoiturage entre parents.</li>
+    <li><b>Respect :</b> une décision peut décevoir, mais jamais de commentaire envers les arbitres, les marqueurs ou les responsables. Certains marqueurs sont des élèves, à leur premier emploi.</li>
+  </ul>
+  <p class="small">Le RSEQ, le cadenas, les chandails, les parents, le covoiturage et le respect : tirés des messages des Loisirs de l'école, 22 et 28 octobre.</p>
+</div>
+
 <h2>Pourquoi cet ordre</h2>
 <div class="block">
   <p>La plupart d'entre vous viennent du soccer. Le futsal se joue avec les mêmes pieds, mais pas avec la même tête : un terrain plus petit, un ballon qui ne rebondit pas, cinq joueurs, et on attaque et on défend tous ensemble. Alors on construit la saison <b>en quatre étapes</b>, chacune posée sur la précédente.</p>
@@ -740,6 +779,9 @@ a{color:var(--court)}
     /*18*/{q:'La zone de l\'ailier.',r:'<b style="color:var(--court)">Bleu</b> : son couloir de côté, sur toute la longueur, large. <b>Orange</b> : il rentre vers le centre, dans notre moitié.',svg:court(LANES+Z(130,12,258,69,'zb')+Z(60,50,140,70,'zs')+P('att',290,45,'A')+T(140,24,'avec le ballon')+T(66,64,'sans le ballon'))},
     /*19*/{q:'La zone du défenseur.',r:'<b style="color:var(--court)">Bleu</b> : couloir du centre, en bas, derrière le ballon. C\'est lui qui reste derrière. <b>Orange</b> : devant notre gardien, sur leur pivot.',svg:court(LANES+Z(110,85,100,70,'zb')+Z(50,85,70,70,'zs')+P('att',150,120,'D')+T(116,98,'avec le ballon')+T(54,150,'sans'))},
     /*20*/{q:'La zone du gardien.',r:'Sa surface. Avec le ballon : il relance vite, à la main, en 4 secondes. Sans le ballon : il protège son but et parle à ses défenseurs.',svg:court(LANES+Z(12,62,62,116,'zb')+Z(12,76,44,88,'zs')+P('gk',32,120,'G')+T(60,58,'sa surface'))},
+    /*22*/{q:'Leur corner : ils jouent court et large.',r:'<b>Un seul sort</b>, le plus proche, et freine. Les trois autres <b>gardent la boîte</b>. On ne court pas tous au ballon.',svg:court(B(14,14)+P('def',26,30,'')+A(30,34,120,40)+P('def',128,40,'')+P('def',140,200,'')+P('def',96,146,'')+P('def',180,110,'')+P('att',98,56,'P')+A(90,52,114,46)+P('att',24,96,'A')+P('gk',24,124,'G')+P('att',68,130,'D')+P('att',72,86,'A'))},
+    /*23*/{q:'D récupère au milieu, c\'est ouvert.',r:'<b>Ouvert : on y va.</b> Une passe vers l\'avant, les deux <b>A</b> courent. <b>D reste derrière</b> : c\'est la règle de la saison.',svg:court(P('gk',32,120,'G')+P('att',180,120,'D')+B(192,114)+P('def',130,70,'')+P('def',140,180,'')+P('def',340,120,'')+P('att',200,60,'A')+A(212,58,330,50)+P('att',220,180,'A')+A(232,182,330,190)+P('att',300,120,'P')+DA(194,112,288,116))},
+    /*24*/{q:'Un ailier récupère sur le côté.',r:'<b>A</b> cherche le <b>P</b> dos au but, ou conduit si c\'est libre. L\'autre <b>A</b> court dans l\'espace. <b>D</b> reste derrière, en soutien : la passe en arrière reste possible.',svg:court(P('gk',32,120,'G')+P('att',240,60,'A')+B(252,66)+P('def',262,90,'')+P('def',200,150,'')+P('def',350,130,'')+P('att',320,120,'P')+DA(252,70,308,112)+P('att',226,188,'A')+A(238,182,330,180)+P('att',160,120,'D')+D(240,60,172,114))},
     /*21*/{q:'Le pivot dérange, puis remonte.',r:'1. Il fonce aux <b>poteaux</b> : les défenseurs reculent avec lui. 2. Le <b>milieu s\'ouvre</b>. 3. Il <b>remonte</b>, reçoit, et <b>remet</b> à un ailier.',svg:court(LANES+'<rect class="zone" x="230" y="92" width="80" height="56" rx="8"/>'+T(246,124,'espace')+P('att',360,104,'P')+P('def',372,126,'')+P('def',346,82,'')+A(352,108,312,118)+P('att',200,50,'A')+B(212,54)+DA(212,56,300,116)+P('att',230,190,'A')+DA(306,124,250,182)+P('att',120,120,'D')+P('gk',32,120,'G'))}
   ];
   var TOOL='move';
@@ -782,6 +824,8 @@ a{color:var(--court)}
       var b=document.createElement('button');b.type='button';b.className='reset';b.textContent='Remettre le dessin';b.addEventListener('click',paint);a.appendChild(b);}
     paint();return a;
   }
+  (function(){var t=iso(today),next=null;[].slice.call(document.querySelectorAll('#tournois .tour')).forEach(function(r){if(r.dataset.d<t){r.style.opacity=.45;}else if(!next){next=r;r.style.background='var(--courtsoft)';}});
+    var el=document.getElementById('prochain');if(next){var n=Math.round((new Date(next.dataset.d+'T12:00')-new Date(t+'T12:00'))/864e5);el.innerHTML='Prochain tournoi : <b>'+next.querySelector('.when').textContent+'</b>, '+next.querySelector('.where').textContent+(n===0?', aujourd\'hui.':(n===1?', demain.':', dans '+n+' jours.'));}else{el.textContent='La saison des tournois est terminée.';}})();
   var list=document.getElementById('slidelist');
   SLIDES.forEach(function(s){list.appendChild(slideCard(s,true));});
   [].slice.call(document.querySelectorAll('[data-slide]')).forEach(function(el){el.appendChild(slideCard(SLIDES[+el.dataset.slide],false));});
